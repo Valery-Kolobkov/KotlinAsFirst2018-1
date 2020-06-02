@@ -154,7 +154,54 @@ fun timeForHalfWay(t1: Double, v1: Double,
      * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
      * Если такой треугольник не существует, вернуть -1.
      */
-    fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+    fun triangleKind(a: Double, b: Double, c: Double): Int {
+        var maxLine = 0.0
+        var maxInd: Int = -0
+        var result: Int = -2
+//        println("a = $a :: b = $b :: c = $c")
+
+        if((a >= b) && (b >= c)) {
+            maxLine = a
+            maxInd = 1
+        }
+        if((a >= b) && (a >= c)) {
+            maxLine = a
+            maxInd = 1
+        }
+        if((b >= a) && (a >= c)) {
+            maxLine = b
+            maxInd = 2
+        }
+        if((a >= b) && (c >= a)) {
+            maxLine = c
+            maxInd = 3
+        }
+        if((b >= a) && (b >= c)) {
+            maxLine = b
+            maxInd = 2
+        }
+        if((b >= a) && (b <= c)) {
+           maxLine = c
+           maxInd = 3
+        }
+ //       println("maxLine = $maxLine :: maxInd = $maxInd")
+
+        if(maxInd == 1 && maxLine >= b + c) return -1
+        if(maxInd == 1 && maxLine * maxLine == b * b + c * c) result = 1
+        if(maxInd == 1 && maxLine * maxLine > b * b + c * c) result =  2
+        if(maxInd == 1 && maxLine * maxLine < b * b + c * c) result =  0
+        if(maxInd == 2 && maxLine >= (a + c)) return -1
+        if(maxInd == 2 && maxLine * maxLine == a * a + c * c) result = 1
+        if(maxInd == 2 && maxLine * maxLine > a * a + c * c) result = 2
+        if(maxInd == 2 && maxLine * maxLine < a * a + c * c) result = 0
+        if(maxInd == 3 && maxLine >= a + b) return -1
+        if(maxInd == 3 && maxLine * maxLine == b * b + a * a) result = 1
+        if(maxInd == 3 && maxLine * maxLine > b * b + a * a) result = 2
+        if(maxInd == 3 && maxLine * maxLine < b * b + a * a) result = 0
+
+
+        return result
+    }
 
     /**
      * Средняя
@@ -164,5 +211,14 @@ fun timeForHalfWay(t1: Double, v1: Double,
      * Найти длину пересечения отрезков AB и CD.
      * Если пересечения нет, вернуть -1.
      */
-    fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
-
+    fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+        return when {
+            (a < c) && (b < c) -> -1
+            (a < c) && (b >= c) && (b < d) -> b - c
+            (a < c) && (b >= d) -> d - c
+            (a > c) && (a > d) -> -1
+            (a > c) && (b < d) -> b - a
+            (a > c) && (b > d) -> d - a
+            else -> -1
+        }
+    }
